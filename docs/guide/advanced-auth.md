@@ -1,220 +1,8 @@
-# 高级认证系统
+# 认证实战指南
 
-lark-cli 的认证系统采用 OAuth 2.0 Device Flow，专为 CLI 和无浏览器环境设计。本文深入讲解认证的核心机制。
+本文基于 [鉴权系统详细解读](./architecture.md) 的理论基础，提供实战场景和常见问题解决方案。
 
-## Device Flow 详解
-
-### 为什么使用 Device Flow？
-
-传统 OAuth 流程需要在本地启动 HTTP 服务器监听回调，但 CLI 环境中：
-- 用户可能在远程服务器上运行 CLI
-- 防火墙可能阻止本地端口
-- 无法保证本地端口可用
-
-Device Flow 解决这个问题：用户在浏览器中授权，CLI 通过轮询获取结果。
-
-### 完整流程
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  lark-cli auth login                         │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  RequestDeviceAuthorization()         │
-        │  POST /oauth2/v2/device_authorization │
-        │  ├─ client_id: appId                  │
-        │  ├─ scope: 权限范围                   │
-        │  └─ 自动添加: offline_access          │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  返回响应                              │
-        │  ├─ device_code: 设备标识             │
-        │  ├─ user_code: 用户输入码             │
-        │  ├─ verification_uri: 授权 URL        │
-        │  ├─ expires_in: 过期时间              │
-        │  └─ interval: 轮询间隔                │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  显示给用户                            │
-        │  "打开浏览器访问: https://..."        │
-        │  "输入代码: ABC123"                   │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  用户在浏览器中打开 URL                │
-        │  输入 user_code 并授权                 │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  PollDeviceToken()                    │
-        │  轮询 /oauth2/v2/token                │
-        │  ├─ device_code: 设备标识             │
-        │  ├─ client_id: appId                  │
-        │  └─ client_secret: appSecret          │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  轮询状态                              │
-        │  ├─ authorization_pending: 继续等待   │
-        │  ├─ slow_down: 增加轮询间隔           │
-        │  ├─ access_denied: 用户拒绝           │
-        │  └─ 成功: 返回 access_token           │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  获取用户信息                          │
-        │  GET /authen/v1/user_info             │
-        │  使用 access_token 获取 open_id       │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  保存到 Keychain                       │
-        │  Key: {appId}:{userOpenId}            │
-        │  Value: JSON(token data)              │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  更新 config.json                     │
-        │  ├─ Users: [{userOpenId, userName}]  │
-        │  └─ DefaultAs: userOpenId             │
-        └───────────────────────────────────────┘
-                            │
-                            ▼
-        ┌───────────────────────────────────────┐
-        │  登录完成                              │
-        └───────────────────────────────────────┘
-```
-
-### 轮询策略
-
-lark-cli 使用智能轮询策略：
-
-```go
-初始间隔: 5 秒
-最大间隔: 60 秒
-超时时间: 240 秒（4 分钟）
-
-轮询逻辑:
-1. 发送轮询请求
-2. 如果返回 slow_down，增加间隔
-3. 如果返回 authorization_pending，继续轮询
-4. 如果返回 access_token，停止轮询
-5. 如果超过 240 秒，超时失败
-```
-
-**为什么这样设计？**
-
-- 初始 5 秒：快速响应用户授权
-- 最大 60 秒：避免过度轮询
-- slow_down 处理：服务器可以动态调整轮询频率
-- 240 秒超时：防止无限等待
-
----
-
-## Token 生命周期
-
-### Token 类型
-
-lark-cli 支持两种 Token：
-
-| Token 类型 | 说明 | 获取方式 | 用途 |
-|-----------|------|--------|------|
-| **UAT** (User Access Token) | 用户身份 Token | Device Flow | 代表用户调用 API |
-| **TAT** (Tenant Access Token) | 应用身份 Token | App Credentials | 代表应用调用 API |
-
-### Token 状态机
-
-```
-┌─────────────┐
-│   获取新    │
-│   Token     │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────────────────────────────┐
-│  Token 有效期内                      │
-│  ├─ access_token: 有效              │
-│  ├─ refresh_token: 有效             │
-│  └─ 状态: valid                     │
-└──────┬──────────────────────────────┘
-       │
-       │ (距离过期 < 5 分钟)
-       ▼
-┌─────────────────────────────────────┐
-│  需要刷新                            │
-│  ├─ 自动调用 RefreshToken()         │
-│  ├─ 使用 refresh_token 获取新 Token │
-│  └─ 状态: needs_refresh             │
-└──────┬──────────────────────────────┘
-       │
-       ▼
-┌─────────────────────────────────────┐
-│  Token 已过期                        │
-│  ├─ access_token: 无效              │
-│  ├─ refresh_token: 无效             │
-│  └─ 状态: expired                   │
-└──────┬──────────────────────────────┘
-       │
-       │ (需要重新登录)
-       ▼
-┌─────────────┐
-│  重新登录   │
-└─────────────┘
-```
-
-### Token 刷新机制
-
-**关键特性：提前 5 分钟刷新**
-
-```go
-// Token 刷新判断逻辑
-if token.ExpiresAt - now < 5 * time.Minute {
-    // 自动刷新
-    newToken = RefreshToken(token.RefreshToken)
-}
-```
-
-**为什么提前 5 分钟？**
-
-- 避免 Token 在 API 调用中过期
-- 给网络延迟留出缓冲时间
-- 提供更好的用户体验（无感知刷新）
-
-### Token 存储
-
-**Keychain 存储格式**
-
-```
-Key: {appId}:{userOpenId}
-Value: {
-  "access_token": "u-xxx",
-  "refresh_token": "ur-xxx",
-  "expires_at": "2026-04-23T10:30:00Z",
-  "refresh_expires_at": "2026-05-23T10:30:00Z",
-  "token_type": "Bearer",
-  "scope": "calendar:calendar:read im:message:send ..."
-}
-```
-
-**跨平台支持**
-
-| 平台 | 存储方式 | 说明 |
-|------|--------|------|
-| macOS | Keychain | 系统原生密钥链 |
-| Linux | 加密文件 | `~/.lark-cli/keychain.db` (AES-256) |
-| Windows | DPAPI + Registry | Windows 数据保护 API |
+> 📖 **前置阅读**：建议先阅读 [鉴权系统详细解读](./architecture.md) 了解 Device Flow、Token 生命周期等基础概念。
 
 ---
 
@@ -312,16 +100,7 @@ $ lark-cli calendar +agenda --as ou_yyy
 
 ---
 
-## 身份解析
-
-### 身份类型
-
-lark-cli 支持两种身份：
-
-| 身份类型 | Token 来源 | 用途 | 权限范围 |
-|---------|----------|------|--------|
-| **User** | UAT (Device Flow) | 代表用户操作 | 用户权限 |
-| **Bot** | TAT (App Credentials) | 代表应用操作 | 应用权限 |
+## 身份切换实战
 
 ### 身份解析优先级
 
@@ -379,70 +158,64 @@ $ lark-cli calendar +agenda --as bot
 
 ---
 
-## 权限管理
+## 权限实战
 
-### 权限检查
+### 场景 1: API 调用返回权限不足
 
-```bash
-# 检查是否有特定权限
-$ lark-cli auth check --scope "calendar:calendar:read"
-{
-  "ok": true,
-  "granted": ["calendar:calendar:read"],
-  "missing": []
-}
-
-# 检查多个权限
-$ lark-cli auth check --scope "calendar:calendar:read calendar:calendar:write"
-{
-  "ok": false,
-  "granted": ["calendar:calendar:read"],
-  "missing": ["calendar:calendar:write"],
-  "suggestion": "lark-cli auth login --scope \"calendar:calendar:write\""
-}
-```
-
-### 权限升级
+当执行命令时遇到权限错误：
 
 ```bash
-# 升级权限
-$ lark-cli auth login --scope "calendar:calendar:write"
+$ lark-cli calendar +agenda
+[lark-cli] ERROR: permission denied
+Hint: Missing scopes: calendar:calendar:read
+Console: https://open.feishu.cn/app/cli_xxx/permission
+
+# 按照提示升级权限
+$ lark-cli auth login --scope "calendar:calendar:read"
 [lark-cli] 打开浏览器访问: https://...
 [lark-cli] 授权成功！
-[lark-cli] 新权限: calendar:calendar:read calendar:calendar:write
 
-# 验证权限已升级
-$ lark-cli auth check --scope "calendar:calendar:write"
-{
-  "ok": true,
-  "granted": ["calendar:calendar:write"],
-  "missing": []
-}
+# 重试命令
+$ lark-cli calendar +agenda
 ```
 
-### 权限范围
+### 场景 2: 预先检查权限
 
-常见权限范围：
+在执行自动化脚本前，先检查权限：
 
+```bash
+#!/bin/bash
+
+# 检查所需权限
+REQUIRED_SCOPES="calendar:calendar:read im:message:send"
+
+if ! lark-cli auth check --scope "$REQUIRED_SCOPES" | grep -q '"ok": true'; then
+  echo "权限不足，请升级"
+  lark-cli auth login --scope "$REQUIRED_SCOPES"
+  exit 1
+fi
+
+# 权限充足，继续执行
+lark-cli calendar +agenda
+lark-cli im +send --text "Hello"
 ```
-# 日历
-calendar:calendar:read          # 读取日历
-calendar:calendar:write         # 编辑日历
 
-# 消息
-im:message:send                 # 发送消息
-im:message:read                 # 读取消息
+### 场景 3: 多应用不同权限
 
-# 文档
-drive:drive:read                # 读取云空间
-drive:drive:write               # 编辑云空间
+不同应用可能有不同的权限配置：
 
-# 通讯录
-contact:user:read               # 读取用户信息
-contact:department:read         # 读取部门信息
+```bash
+# 应用 1: 仅日历权限
+$ lark-cli profile use app-calendar
+$ lark-cli auth login --scope "calendar:calendar:read"
 
-# 离线访问
-offline_access                  # 获取 refresh_token
+# 应用 2: 仅消息权限
+$ lark-cli profile use app-messaging
+$ lark-cli auth login --scope "im:message:send"
+
+# 应用 3: 完整权限
+$ lark-cli profile use app-full
+$ lark-cli auth login --recommend
 ```
 
 ---
