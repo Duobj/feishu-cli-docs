@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  outDir: '../dist',
   title: 'feishu-cli 源码学习',
   description: 'lark-cli 鉴权系统完整学习资料库',
   base: '/feishu-cli-docs/',
@@ -24,6 +25,7 @@ export default defineConfig({
           text: '深入理解',
           items: [
             { text: '鉴权系统详细解读', link: '/guide/architecture' },
+            { text: '高级认证系统', link: '/guide/advanced-auth' },
             { text: '实现指南', link: '/guide/implementation' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
