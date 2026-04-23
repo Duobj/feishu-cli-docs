@@ -26,6 +26,7 @@ export default defineConfig({
           items: [
             { text: '鉴权系统详细解读', link: '/guide/architecture' },
             { text: '高级认证系统', link: '/guide/advanced-auth' },
+            { text: '凭证提供者系统', link: '/guide/credential-providers' },
             { text: '实现指南', link: '/guide/implementation' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
