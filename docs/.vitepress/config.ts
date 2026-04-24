@@ -29,6 +29,7 @@ export default defineConfig({
             { text: '凭证提供者系统', link: '/guide/credential-providers' },
             { text: '命令系统设计', link: '/guide/command-system' },
             { text: '配置管理系统', link: '/guide/config-system' },
+            { text: '错误处理体系', link: '/guide/error-handling' },
             { text: '实现指南', link: '/guide/implementation' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
