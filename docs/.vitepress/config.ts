@@ -28,6 +28,7 @@ export default defineConfig({
             { text: '高级认证系统', link: '/guide/advanced-auth' },
             { text: '凭证提供者系统', link: '/guide/credential-providers' },
             { text: '命令系统设计', link: '/guide/command-system' },
+            { text: '配置管理系统', link: '/guide/config-system' },
             { text: '实现指南', link: '/guide/implementation' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
