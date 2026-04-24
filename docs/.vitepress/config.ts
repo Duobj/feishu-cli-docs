@@ -32,6 +32,7 @@ export default defineConfig({
             { text: '错误处理体系', link: '/guide/error-handling' },
             { text: '快捷命令开发实战', link: '/guide/shortcut-development' },
             { text: '源码导航指南', link: '/guide/source-code-navigation' },
+            { text: 'Calendar 服务开发指南', link: '/guide/calendar-service-guide' },
             { text: '实现指南', link: '/guide/implementation' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
