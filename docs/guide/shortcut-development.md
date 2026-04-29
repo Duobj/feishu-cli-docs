@@ -690,11 +690,11 @@ return output.ErrAPI(err.Code, "permission denied", nil)
 ### 调试技巧
 
 ```bash
-# 显示详细日志
-LARK_CLI_DEBUG=1 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z"
+# 显示详细日志和调试输出
+lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z" --verbose
 
-# 显示 API 请求
-LARK_CLI_TRACE=1 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z"
+# 显示 HTTP 请求/响应追踪
+lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z" --trace
 
 # 显示将要执行的操作
 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z" --dry-run

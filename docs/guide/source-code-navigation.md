@@ -144,7 +144,8 @@ security find-generic-password -s "lark-cli" -a "cli_xxx:ou_yyy"
 ls -la ~/.lark-cli/keychain/
 
 # 启用调试日志
-LARK_CLI_DEBUG=1 lark-cli auth login
+# 调试模式：打印详细日志
+lark-cli auth login
 ```
 
 ---
@@ -209,7 +210,7 @@ func SaveMultiAppConfig(config *MultiAppConfig) error
 ```
 
 **加载流程**:
-1. 检查 `LARK_CONFIG_DIR` 环境变量
+1. 检查 `LARKSUITE_CLI_CONFIG_DIR` 环境变量
 2. 默认位置: `~/.lark-cli/config.json`
 3. 读取 JSON 文件
 4. 验证结构（apps 非空）
@@ -457,7 +458,8 @@ lark-cli calendar +create --help
 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z" --dry-run
 
 # 启用调试日志
-LARK_CLI_DEBUG=1 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z"
+# 调试模式：打印详细日志
+lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z"
 
 # JSON 输出便于解析
 lark-cli calendar +create --summary "Meeting" --start "2026-04-24T09:00:00Z" --end "2026-04-24T10:00:00Z" --format json | jq .

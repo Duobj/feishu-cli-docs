@@ -76,10 +76,13 @@ lark-cli calendar +agenda --json
 
 | 变量 | 用途 |
 |------|------|
-| LARK_USER_ACCESS_TOKEN | 提供 User Access Token (UAT) |
-| LARK_APP_SECRET | 提供 AppSecret |
-| LARK_CONFIG_DIR | 配置目录 |
-| LARK_DEBUG | 启用调试 |
+| LARKSUITE_CLI_USER_ACCESS_TOKEN | 提供 User Access Token (UAT) |
+| LARKSUITE_CLI_TENANT_ACCESS_TOKEN | 提供 Tenant Access Token (TAT) |
+| LARKSUITE_CLI_APP_ID | 提供 App ID |
+| LARKSUITE_CLI_APP_SECRET | 提供 AppSecret |
+| LARKSUITE_CLI_CONFIG_DIR | 配置目录 |
+| LARKSUITE_CLI_DEFAULT_AS | 默认身份（user/bot） |
+| LARKSUITE_CLI_STRICT_MODE | 严格模式（user/bot/off） |
 
 ---
 

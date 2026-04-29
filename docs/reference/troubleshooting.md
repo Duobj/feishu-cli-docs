@@ -26,7 +26,8 @@
     ├─ 步骤 4: 检查权限
     │  └─ lark-cli auth check --scope "..."
     ├─ 步骤 5: 查看日志
-    │  └─ export LARK_DEBUG=1
+    │  └─ # 开启详细日志输出（示例，实际 CLI 版本请参考最新文档）
+lark-cli auth status --verbose
     └─ 步骤 6: 重新初始化
        └─ lark-cli config init
 ```
@@ -187,7 +188,8 @@ lark-cli auth status
 ### 启用调试日志
 
 ```bash
-export LARK_DEBUG=1
+# 开启详细日志输出（示例，实际 CLI 版本请参考最新文档）
+lark-cli auth status --verbose
 lark-cli calendar +agenda
 ```
 

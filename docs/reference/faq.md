@@ -14,7 +14,7 @@ lark-cli auth login --device-code $DEVICE_CODE
 或者使用环境变量提供 Token：
 
 ```bash
-export LARK_USER_ACCESS_TOKEN="uat_xxx"
+export LARKSUITE_CLI_USER_ACCESS_TOKEN="uat_xxx"
 lark-cli calendar +agenda
 ```
 
@@ -26,8 +26,8 @@ lark-cli calendar +agenda
 
 **A:** 不要在配置文件中存储 AppSecret。使用以下方式之一：
 
-1. 环境变量：`export LARK_APP_SECRET="xxx"`
-2. 密钥管理系统：`export LARK_APP_SECRET=$(vault kv get -field=secret secret/lark-cli)`
+1. 环境变量：`export LARKSUITE_CLI_APP_SECRET="xxx"`
+2. 密钥管理系统：`export LARKSUITE_CLI_APP_SECRET=$(vault kv get -field=secret secret/lark-cli)`
 3. 自定义凭证提供者：实现 `extension/credential.Provider` 接口
 
 ---

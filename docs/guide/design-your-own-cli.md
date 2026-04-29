@@ -177,10 +177,13 @@ Extension Provider 1 → Extension Provider 2 → ... → Default Provider
 每个提供者只需实现：
 ```go
 type Provider interface {
-    ResolveAccount(ctx context.Context, hint string) (*Account, error)
-    ResolveToken(ctx context.Context, account *Account) (*Token, error)
+    Name() string                                                   // 提供者名称
+    ResolveAccount(ctx context.Context) (*Account, error)           // 解析账户
+    ResolveToken(ctx context.Context, req TokenSpec) (*Token, error) // 解析 Token
 }
 ```
+
+返回约定：返回 `nil, nil` 表示跳过，由下一提供者继续；返回 `nil, &BlockError{}` 则阻止后续提供者。
 
 **为什么要用链？**
 - 不同环境用不同的密钥来源（开发用 Keychain，生产用 Vault）
@@ -249,7 +252,7 @@ type SecretInput string
 
 | 策略 | 实现方式 | 适用场景 |
 |------|---------|---------|
-| 多应用配置 | `apps: { default, staging, prod }` | 同一 CLI 连接多个环境 |
+| 多应用配置 | `apps: [{ name: "default" }, { name: "staging" }]` | 同一 CLI 连接多个环境 |
 | 配置文件覆盖 | 环境变量 `YOUR_CLI_CONFIG` 指定路径 | CI/CD 不同配置 |
 | Profile 切换 | `your-cli profile use staging` | 快速切换 |
 
@@ -264,11 +267,11 @@ type SecretInput string
 **第一层 - 退出码**（给脚本用）：
 ```
 0  → 成功
-1  → 通用错误
-2  → 认证错误（Token 过期、权限不足）
-3  → 输入错误（参数校验失败）
-4  → API 错误（服务端返回错误）
-5  → 网络错误（连接超时、DNS 解析失败）
+1  → API / 通用错误（权限、未找到、冲突、限流等）
+2  → 参数验证失败
+3  → 认证失败（Token 无效/过期）
+4  → 网络错误（连接超时、DNS 失败）
+5  → 内部错误（不应发生，如 panic）
 ```
 
 **第二层 - 细粒度错误类型**（给用户看）：

@@ -31,15 +31,18 @@ CredentialProvider.ResolveToken()
 
 ### 提供者接口
 
-每个提供者需要实现两个方法：
+每个提供者需要实现三个方法：
 
 ```go
 type Provider interface {
-    // 解析账户信息（用户或应用）
-    ResolveAccount(ctx context.Context, hint string) (*Account, error)
+    // 提供者名称（用于日志和错误追踪）
+    Name() string
+
+    // 解析账户信息（应用凭证和身份配置）
+    ResolveAccount(ctx context.Context) (*Account, error)
     
-    // 解析 Token
-    ResolveToken(ctx context.Context, account *Account) (*Token, error)
+    // 解析指定类型的 Token
+    ResolveToken(ctx context.Context, req TokenSpec) (*Token, error)
 }
 ```
 
@@ -48,8 +51,13 @@ type Provider interface {
 | 参数 | 说明 |
 |------|------|
 | `ctx` | 上下文，用于超时控制 |
-| `hint` | 身份提示（"user" 或 "bot"） |
-| `account` | 账户信息（用户 OpenID 或应用 ID） |
+| `req.Type` | Token 类型：`uat`（User Access Token）或 `tat`（Tenant Access Token） |
+| `req.AppID` | 目标应用 ID |
+
+**返回值语义：**
+- 处理成功：返回 `&Account{...}, nil` 或 `&Token{...}, nil`
+- 跳过（不处理）：返回 `nil, nil`，链继续尝试下一个
+- 主动拒绝：返回 `nil, &BlockError{...}`，链停止
 
 ---
 
@@ -64,32 +72,36 @@ type Provider interface {
 **支持的环境变量：**
 
 ```bash
-# 用户 Token
-LARK_USER_ACCESS_TOKEN=u-xxx
-LARK_USER_REFRESH_TOKEN=ur-xxx
-
 # 应用凭证
-LARK_APP_ID=cli_xxx
-LARK_APP_SECRET=***
+LARKSUITE_CLI_APP_ID=cli_xxx
+LARKSUITE_CLI_APP_SECRET=***
 
-# 租户 Token
-LARK_TENANT_ACCESS_TOKEN=t-xxx
+# 用户 Token (UAT)
+LARKSUITE_CLI_USER_ACCESS_TOKEN=u-xxx
+
+# 租户 Token (TAT)
+LARKSUITE_CLI_TENANT_ACCESS_TOKEN=t-xxx
+
+# 身份与品牌控制
+LARKSUITE_CLI_DEFAULT_AS=user        # 默认身份（user / bot / auto）
+LARKSUITE_CLI_STRICT_MODE=off        # 严格模式（user / bot / off）
+LARKSUITE_CLI_BRAND=feishu           # 品牌（feishu / lark）
 ```
 
 **使用示例：**
 
 ```bash
 # 方式 1: 使用用户 Token
-export LARK_USER_ACCESS_TOKEN="u-xxx"
+export LARKSUITE_CLI_USER_ACCESS_TOKEN="u-xxx"
 lark-cli calendar +agenda
 
 # 方式 2: 使用应用凭证
-export LARK_APP_ID="cli_xxx"
-export LARK_APP_SECRET="***"
+export LARKSUITE_CLI_APP_ID="cli_xxx"
+export LARKSUITE_CLI_APP_SECRET="***"
 lark-cli calendar +agenda
 
 # 方式 3: 在 CI/CD 中
-LARK_USER_ACCESS_TOKEN=${{ secrets.LARK_TOKEN }} lark-cli calendar +agenda
+LARKSUITE_CLI_USER_ACCESS_TOKEN=${{ secrets.LARK_TOKEN }} lark-cli calendar +agenda
 ```
 
 ### 2. 默认提供者
@@ -247,7 +259,7 @@ func init() {
 
 **查询顺序：**
 
-1. 环境变量提供者 - 检查 `LARK_USER_ACCESS_TOKEN` 等
+1. 环境变量提供者 - 检查 `LARKSUITE_CLI_USER_ACCESS_TOKEN` 等
 2. AWS 提供者 - 查询 AWS Secrets Manager
 3. 文件提供者 - 读取本地加密文件
 4. 默认提供者 - 从 Keychain 读取
@@ -280,7 +292,7 @@ jobs:
       
       - name: Run lark-cli
         env:
-          LARK_USER_ACCESS_TOKEN: ${{ secrets.LARK_TOKEN }}
+          LARKSUITE_CLI_USER_ACCESS_TOKEN: ${{ secrets.LARK_TOKEN }}
         run: |
           lark-cli calendar +agenda
           lark-cli im +send --text "Build completed"

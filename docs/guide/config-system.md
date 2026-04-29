@@ -30,7 +30,7 @@ lark-cli 的配置系统需要解决以下问题：
 ~/.lark-cli/config.json
 
 # 自定义位置
-export LARK_CONFIG_DIR=/path/to/config
+export LARKSUITE_CLI_CONFIG_DIR=/path/to/config
 ```
 
 ### 配置结构
@@ -117,7 +117,7 @@ export LARK_CONFIG_DIR=/path/to/config
 
 ```
 应用启动
-  ├─ 检查 LARK_CONFIG_DIR 环境变量
+  ├─ 检查 LARKSUITE_CLI_CONFIG_DIR 环境变量
   ├─ 如果未设置，使用 ~/.lark-cli
   ├─ 读取 config.json
   ├─ 解析 JSON
