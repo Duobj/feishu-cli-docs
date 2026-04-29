@@ -8,6 +8,49 @@
 
 ---
 
+## 使用 CLI Designer Skill
+
+本文的七步框架已封装为一个 Claude Code Skill，位于本项目的 `.claude/skills/cli-designer/SKILL.md`。调用后 AI 会按本文的步骤引导你一步步完成 CLI 的设计和实现。
+
+### 在本项目中直接使用
+
+如果你已经 clone 了本项目，在项目目录下启动 Claude Code 即可使用：
+
+```bash
+git clone https://github.com/Duobj/feishu-cli-docs.git
+cd feishu-cli-docs
+claude
+```
+
+然后输入 `/cli-designer 我想做一个订单管理系统的CLI`。
+
+### 安装到所有项目（个人级）
+
+将 Skill 复制到你的个人技能目录，此后所有项目都能使用：
+
+```bash
+mkdir -p ~/.claude/skills/cli-designer
+cp .claude/skills/cli-designer/SKILL.md ~/.claude/skills/cli-designer/
+```
+
+### 安装到你的团队项目
+
+将 `.claude/skills/cli-designer/` 目录复制到你的 CLI 项目中：
+
+```bash
+cp -r .claude/skills/cli-designer /path/to/your-project/.claude/skills/
+```
+
+### 验证安装
+
+在 Claude Code 中输入 `/cli-designer`，如果看到自动补全提示，说明安装成功。
+
+### Skill 格式说明
+
+Skill 遵循 [Agent Skills](https://agentskills.io) 开放标准，一份 `SKILL.md` 文件即可。不限于 Claude Code，任何支持该标准的 AI 编程工具都能使用。
+
+---
+
 ## 总体设计思路
 
 设计一套业务服务 CLI，核心是回答四个问题：
