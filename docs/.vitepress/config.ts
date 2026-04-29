@@ -6,12 +6,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   outDir: resolve(__dirname, '../../dist'),
-  title: 'feishu-cli 源码学习',
-  description: 'lark-cli 鉴权系统完整学习资料库',
+  title: 'CLI 架构设计指南',
+  description: '从 lark-cli 源码学习 CLI 架构设计，掌握构建业务服务 CLI 的方法论',
   base: '/feishu-cli-docs/',
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
+      { text: '设计你自己的 CLI', link: '/guide/design-your-own-cli' },
       { text: '指南', link: '/guide/quick-start' },
       { text: '参考', link: '/reference/commands' },
       { text: 'GitHub', link: 'https://github.com/larksuite/cli' }
