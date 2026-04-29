@@ -82,6 +82,8 @@ lark-cli calendar +agenda
 - 预计时间：10-12 小时
 - 内容：完整文档 → 实现细节 → 所有场景 → 源码导航 → 设计你自己的 CLI
 
+**快速上手：** 完成学习后，使用 `/cli-designer` 命令让 AI 引导你创建自己的 CLI 项目。
+
 ---
 
 ## 下一步
@@ -89,3 +91,4 @@ lark-cli calendar +agenda
 - [查看文档索引](/guide/index)
 - [查看命令参考](/reference/commands)
 - [查看常见问题](/reference/faq)
+- 直接开始：输入 `/cli-designer 我的业务描述` 创建你的第一个 CLI

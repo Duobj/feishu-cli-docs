@@ -2,6 +2,8 @@
 
 本文是 lark-cli 文档体系的**综合实战指南**。前面各章讲解了 lark-cli 每个模块怎么设计的，本章把所有模式串起来，手把手带你设计一套自己的业务服务 CLI。
 
+> 💡 **快速上手**：如果你更希望让 AI 引导你一步步完成，直接输入 `/cli-designer <你的业务描述>`，Skill 会自动按本文框架引导你。
+
 > 📖 **前置阅读**：建议已阅读 [鉴权系统](./architecture.md)、[实现指南](./implementation.md)、[命令系统](./command-system.md)、[配置系统](./config-system.md)、[错误处理](./error-handling.md)、[快捷命令开发](./shortcut-development.md)，即文档索引中的前 6 篇核心文档。
 
 ---
@@ -565,6 +567,7 @@ echo "your-cli ${VERSION} 安装完成"
 ## 下一步
 
 完成本文学习后：
+- **即时上手**：使用 `/cli-designer` 命令让 AI 引导你一步步创建自己的 CLI 项目
 - **实践**：用本文的模板开始搭建你自己的 CLI 项目
 - **参考**：遇到具体问题时查阅 [命令系统设计](./command-system.md)、[配置管理系统](./config-system.md)、[错误处理体系](./error-handling.md) 的详细内容
 - **深入**：研究 [Calendar 服务开发指南](./calendar-service-guide.md) 了解真实的服务开发案例

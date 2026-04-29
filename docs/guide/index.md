@@ -217,5 +217,6 @@
 9. 使用 [源码导航指南](./source-code-navigation.md) 对照源码深入理解
 10. 学习 [设计你自己的 CLI](./design-your-own-cli.md) 把模式应用到自己的项目
 11. 研究 [场景和流程图](./scenarios.md) 中的所有场景
+12. 使用 `/cli-designer` Skill 让 AI 引导你一步步实现自己的 CLI
 
 **预计时间**：10-12 小时
