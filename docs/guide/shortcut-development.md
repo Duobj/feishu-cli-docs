@@ -814,6 +814,6 @@ if len(missing) > 0 {
 
 ## 下一步
 
-- 查看 [快捷命令实现](https://github.com/larksuite/cli/tree/main/shortcuts) 学习具体例子
-- 研究 [参数处理](https://github.com/larksuite/cli/blob/main/shortcuts/common/runner.go) 的细节
-- 学习 [错误处理](https://github.com/larksuite/cli/blob/main/internal/output/errors.go) 的最佳实践
+- [Calendar 服务开发指南](./calendar-service-guide.md) - 深入学习真实服务开发案例
+- [高级认证系统](./advanced-auth.md) - 掌握多应用管理和身份切换
+- 源码参考：[快捷命令实现](https://github.com/larksuite/cli/tree/main/shortcuts)、[参数处理](https://github.com/larksuite/cli/blob/main/shortcuts/common/runner.go)

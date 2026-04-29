@@ -2,7 +2,7 @@
 
 本文帮助开发者快速在 lark-cli 源码中找到关键设计的实现，从文档到代码的完整导航。
 
-> 📖 **前置阅读**：建议先阅读相应的设计文档，然后用本指南定位源码实现。
+> 📖 **前置阅读**：建议先阅读 [鉴权系统](./architecture.md)、[实现指南](./implementation.md)、[命令系统](./command-system.md)、[配置系统](./config-system.md)、[错误处理](./error-handling.md)，然后使用本指南定位对应的源码实现。
 
 ---
 

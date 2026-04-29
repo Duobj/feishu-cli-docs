@@ -497,13 +497,13 @@ func init() {
 ## 相关资源
 
 - [鉴权系统详细解读](./architecture.md) - 理论基础
-- [认证实战指南](./advanced-auth.md) - 实战场景
+- [高级认证系统](./advanced-auth.md) - 多应用管理与身份切换
 - [源码位置](https://github.com/larksuite/cli/tree/main/extension/credential) - GitHub 仓库
 
 ---
 
 ## 下一步
 
-- 查看 [环境变量提供者源码](https://github.com/larksuite/cli/blob/main/extension/credential/env/env.go)
-- 学习 [默认提供者实现](https://github.com/larksuite/cli/blob/main/internal/credential/default_provider.go)
-- 贡献自己的提供者到社区
+- [源码导航指南](./source-code-navigation.md) - 对照源码深入理解实现
+- [设计你自己的 CLI](./design-your-own-cli.md) - 将提供者链模式应用到自己的项目
+- 源码参考：[环境变量提供者](https://github.com/larksuite/cli/blob/main/extension/credential/env/env.go)、[默认提供者](https://github.com/larksuite/cli/blob/main/internal/credential/default_provider.go)

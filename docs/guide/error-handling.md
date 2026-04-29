@@ -766,7 +766,6 @@ if err := callAPI(); err != nil {
 
 ## 下一步
 
-- 查看 [错误类型定义](https://github.com/larksuite/cli/blob/main/internal/output/errors.go)
-- 学习 [API 错误映射](https://github.com/larksuite/cli/blob/main/internal/output/lark_errors.go)
-- 研究 [权限错误增强](https://github.com/larksuite/cli/blob/main/cmd/root.go)
-- 了解 [安全策略错误处理](https://github.com/larksuite/cli/blob/main/internal/auth/transport.go)
+- [快捷命令开发实战](./shortcut-development.md) - 动手开发一个新快捷命令
+- [Calendar 服务开发指南](./calendar-service-guide.md) - 深入学习服务特定开发模式
+- 源码参考：[错误类型定义](https://github.com/larksuite/cli/blob/main/internal/output/errors.go)、[API 错误映射](https://github.com/larksuite/cli/blob/main/internal/output/lark_errors.go)

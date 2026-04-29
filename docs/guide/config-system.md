@@ -835,6 +835,5 @@ func ValidateProfile(p *Profile) error {
 
 ## 下一步
 
-- 查看 [配置加载实现](https://github.com/larksuite/cli/blob/main/internal/core/config.go)
-- 学习 [原子写入实现](https://github.com/larksuite/cli/blob/main/internal/vfs/localfileio/atomicwrite.go)
-- 研究 [Keychain 抽象](https://github.com/larksuite/cli/blob/main/internal/keychain/keychain.go)
+- [错误处理体系](./error-handling.md) - 学习 CLI 的错误处理设计
+- 源码参考：[配置加载](https://github.com/larksuite/cli/blob/main/internal/core/config.go)、[原子写入](https://github.com/larksuite/cli/blob/main/internal/vfs/localfileio/atomicwrite.go)、[Keychain](https://github.com/larksuite/cli/blob/main/internal/keychain/keychain.go)

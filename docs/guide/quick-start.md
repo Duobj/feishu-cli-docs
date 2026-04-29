@@ -42,22 +42,29 @@ lark-cli calendar +agenda
 
 ### 2. 学习实现
 
-查看 [实现指南](/guide/implementation) 学习代码细节。
+查看 [实现指南](/guide/implementation) 学习代码结构。
 
-### 3. 查看场景
+### 3. 掌握核心系统
 
-参考 [场景和流程图](/guide/scenarios) 理解实际应用。
+依次学习 [命令系统设计](/guide/command-system)、[配置管理系统](/guide/config-system)、[错误处理体系](/guide/error-handling)。
+
+### 4. 动手实战
+
+阅读 [快捷命令开发实战](/guide/shortcut-development)，参考 [场景和流程图](/guide/scenarios) 理解实际应用。
 
 ---
 
 ## 高级系统设计者
 
-如果你需要深入研究整个系统：
+如果你需要深入研究并设计自己的 CLI：
 
-1. 完整阅读 [鉴权系统详细解读](/guide/architecture)
-2. 深入学习 [实现指南](/guide/implementation)
-3. 研究 [场景和流程图](/guide/scenarios) 中的所有场景
-4. 查看源代码实现
+1. 完整阅读 [鉴权系统详细解读](/guide/architecture) 和 [实现指南](/guide/implementation)
+2. 深入学习 [命令系统](/guide/command-system)、[配置系统](/guide/config-system)、[错误处理](/guide/error-handling)
+3. 学习 [快捷命令开发实战](/guide/shortcut-development) 和 [Calendar 服务开发指南](/guide/calendar-service-guide)
+4. 研究 [高级认证系统](/guide/advanced-auth) 和 [凭证提供者系统](/guide/credential-providers)
+5. 使用 [源码导航指南](/guide/source-code-navigation) 深入源码
+6. 阅读 [设计你自己的 CLI](/guide/design-your-own-cli) 综合应用
+7. 查看 [场景和流程图](/guide/scenarios) 中的所有场景
 
 ---
 
@@ -69,10 +76,10 @@ lark-cli calendar +agenda
 
 ### 中级（开发者）
 - 预计时间：6-7 小时
-- 内容：架构概览 → 核心流程 → 命令系统 → 配置系统 → 错误处理 → 快捷命令开发 → 流程图
+- 内容：架构概览 → 实现指南 → 命令系统 → 配置系统 → 错误处理 → 快捷命令开发 → 流程图
 
 ### 高级（系统设计者）
-- 预计时间：20-25 小时
+- 预计时间：10-12 小时
 - 内容：完整文档 → 实现细节 → 所有场景 → 源码导航 → 设计你自己的 CLI
 
 ---

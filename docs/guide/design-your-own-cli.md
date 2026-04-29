@@ -2,7 +2,7 @@
 
 本文是 lark-cli 文档体系的**综合实战指南**。前面各章讲解了 lark-cli 每个模块怎么设计的，本章把所有模式串起来，手把手带你设计一套自己的业务服务 CLI。
 
-> 📖 **前置阅读**：建议已完成中级学习路径（架构 + 命令系统 + 配置系统 + 错误处理 + 快捷命令开发）。
+> 📖 **前置阅读**：建议已阅读 [鉴权系统](./architecture.md)、[实现指南](./implementation.md)、[命令系统](./command-system.md)、[配置系统](./config-system.md)、[错误处理](./error-handling.md)、[快捷命令开发](./shortcut-development.md)，即文档索引中的前 6 篇核心文档。
 
 ---
 

@@ -1,5 +1,7 @@
 # 场景和流程图
 
+> 📖 **前置阅读**：建议先阅读 [鉴权系统详细解读](./architecture.md) 了解认证流程基础。
+
 ## 完整流程图
 
 ### 登录流程
@@ -191,3 +193,11 @@ lark-cli auth check --scope "calendar:calendar:write"
 security unlock-keychain  # macOS
 lark-cli config init      # 重新初始化
 ```
+
+---
+
+## 下一步
+
+- [文档索引](./index.md) - 返回文档索引查看完整学习路径
+- [设计你自己的 CLI](./design-your-own-cli.md) - 将所有模式应用到自己的项目
+- [命令速查表](/reference/commands) - 快速查找常用命令

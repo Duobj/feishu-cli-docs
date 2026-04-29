@@ -719,6 +719,7 @@ if err := rejectCalendarAutoBotFallback(runtime); err != nil {
 
 ## 下一步
 
-- 查看 [calendar_agenda.go](https://github.com/larksuite/cli/blob/main/shortcuts/calendar/calendar_agenda.go) 学习递归分割实现
-- 查看 [calendar_room_find.go](https://github.com/larksuite/cli/blob/main/shortcuts/calendar/calendar_room_find.go) 学习并发优化
-- 查看 [calendar_create.go](https://github.com/larksuite/cli/blob/main/shortcuts/calendar/calendar_create.go) 学习事务性操作
+- [高级认证系统](./advanced-auth.md) - 掌握多应用管理和身份切换
+- [凭证提供者系统](./credential-providers.md) - 学习自定义密钥来源
+- [设计你自己的 CLI](./design-your-own-cli.md) - 将服务开发模式应用到自己的项目
+- 源码参考：[calendar_agenda.go](https://github.com/larksuite/cli/blob/main/shortcuts/calendar/calendar_agenda.go)、[calendar_create.go](https://github.com/larksuite/cli/blob/main/shortcuts/calendar/calendar_create.go)

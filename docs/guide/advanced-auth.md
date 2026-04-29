@@ -1,8 +1,8 @@
-# 认证实战指南
+# 高级认证系统
 
 本文基于 [鉴权系统详细解读](./architecture.md) 的理论基础，提供实战场景和常见问题解决方案。
 
-> 📖 **前置阅读**：建议先阅读 [鉴权系统详细解读](./architecture.md) 了解 Device Flow、Token 生命周期等基础概念。
+> 📖 **前置阅读**：建议先阅读 [鉴权系统详细解读](./architecture.md) 和 [配置管理系统](./config-system.md) 了解 Device Flow、Token 生命周期和多应用配置结构。
 
 ---
 

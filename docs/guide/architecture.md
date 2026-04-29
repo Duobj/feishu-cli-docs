@@ -132,3 +132,11 @@ lark-cli auth login --domain calendar    # 只请求必要的权限
 lark-cli auth status                     # 检查当前权限
 lark-cli auth check --scope "..."        # 验证特定权限
 ```
+
+---
+
+## 下一步
+
+- [实现指南](./implementation.md) - 了解代码架构和目录结构
+- [命令系统设计](./command-system.md) - 学习命令组织方式
+- [场景和流程图](./scenarios.md) - 通过可视化理解完整流程

@@ -2,7 +2,7 @@
 
 本文讲解 lark-cli 如何设计和实现命令系统，包括命令组织、参数处理、执行流程等核心设计模式。这些模式可以直接应用到你自己的 CLI 项目中。
 
-> 📖 **前置阅读**：建议先阅读 [实现指南](./implementation.md) 了解代码架构。
+> 📖 **前置阅读**：建议先阅读 [鉴权系统详细解读](./architecture.md) 了解系统架构和认证体系。
 
 ---
 
@@ -780,6 +780,6 @@ HasFormat: true,  // 自动支持 --format json|table|csv|ndjson
 
 ## 下一步
 
-- 查看 [快捷命令实现](https://github.com/larksuite/cli/tree/main/shortcuts) 学习具体例子
-- 研究 [参数处理](https://github.com/larksuite/cli/blob/main/shortcuts/common/runner.go) 的细节
-- 学习 [错误处理](https://github.com/larksuite/cli/blob/main/internal/output/errors.go) 的最佳实践
+- [配置管理系统](./config-system.md) - 学习配置的设计和实现
+- [错误处理体系](./error-handling.md) - 理解两层错误分类模型
+- 源码参考：[快捷命令实现](https://github.com/larksuite/cli/tree/main/shortcuts)、[参数处理](https://github.com/larksuite/cli/blob/main/shortcuts/common/runner.go)
