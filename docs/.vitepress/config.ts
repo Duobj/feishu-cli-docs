@@ -1,7 +1,11 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
-  outDir: '../dist',
+  outDir: resolve(__dirname, '../../dist'),
   title: 'feishu-cli 源码学习',
   description: 'lark-cli 鉴权系统完整学习资料库',
   base: '/feishu-cli-docs/',
