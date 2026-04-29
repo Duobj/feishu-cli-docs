@@ -14,34 +14,46 @@
 {
   "currentApp": "my-app-1",
   "previousApp": "my-app-2",
-  "apps": {
-    "my-app-1": {
+  "apps": [
+    {
+      "name": "my-app-1",
       "appId": "cli_xxx",
-      "appSecret": "***",
+      "appSecret": {
+        "ref": {
+          "source": "keychain",
+          "id": "appsecret:cli_xxx"
+        }
+      },
       "brand": "feishu",
       "lang": "zh",
+      "defaultAs": "ou_xxx",
       "users": [
         {
           "userOpenId": "ou_xxx",
           "userName": "张三"
         }
-      ],
-      "defaultAs": "ou_xxx"
+      ]
     },
-    "my-app-2": {
+    {
+      "name": "my-app-2",
       "appId": "cli_yyy",
-      "appSecret": "***",
+      "appSecret": {
+        "ref": {
+          "source": "keychain",
+          "id": "appsecret:cli_yyy"
+        }
+      },
       "brand": "lark",
       "lang": "en",
+      "defaultAs": "ou_yyy",
       "users": [
         {
           "userOpenId": "ou_yyy",
           "userName": "Li Si"
         }
-      ],
-      "defaultAs": "ou_yyy"
+      ]
     }
-  }
+  ]
 }
 ```
 

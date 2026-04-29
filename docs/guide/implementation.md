@@ -50,11 +50,11 @@ lark-cli/
 │   │   ├── keychain_linux.go         # Linux Secret Service 实现
 │   │   └── keychain_windows.go       # Windows Credential Manager 实现
 │   │
-│   └── errors/                       # 错误处理
+│   └── output/                       # 错误处理与输出
 │       ├── errors.go                 # 错误类型定义
 │       ├── lark_errors.go            # 飞书 API 错误码映射
-│       ├── exit_code.go              # 退出码定义
-│       └── recovery.go               # 错误恢复建议生成
+│       ├── exitcode.go               # 退出码定义
+│       └── output.go                 # 输出格式化
 │
 ├── shortcuts/                        # 快捷命令实现
 │   ├── calendar/                     # Calendar 服务快捷命令
@@ -82,7 +82,7 @@ lark-cli/
 │  internal/auth/      认证逻辑            │
 │  internal/credential/ 凭证提供者         │  ← 业务逻辑
 │  internal/core/      配置 + 基础设施      │
-│  internal/errors/    错误处理            │
+│  internal/output/    错误处理与输出       │
 ├─────────────────────────────────────────┤
 │  internal/keychain/    OS 密钥链         │  ← 平台抽象
 ├─────────────────────────────────────────┤

@@ -177,14 +177,14 @@ Extension Provider 1 → Extension Provider 2 → ... → Default Provider
 每个提供者只需实现：
 ```go
 type Provider interface {
-    ResolveToken(ctx context.Context) (*Token, error)
-    Name() string
+    ResolveAccount(ctx context.Context, hint string) (*Account, error)
+    ResolveToken(ctx context.Context, account *Account) (*Token, error)
 }
 ```
 
 **为什么要用链？**
 - 不同环境用不同的密钥来源（开发用 Keychain，生产用 Vault）
-- 提供者按注册顺序依次尝试，找到有效 Token 就返回
+- 提供者按注册顺序依次尝试，找到有效凭证就返回
 - 新增提供者只需实现接口，零侵入
 
 ---

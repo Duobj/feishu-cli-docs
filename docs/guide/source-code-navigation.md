@@ -209,7 +209,7 @@ func SaveMultiAppConfig(config *MultiAppConfig) error
 ```
 
 **加载流程**:
-1. 检查 `LARKSUITE_CLI_CONFIG_DIR` 环境变量
+1. 检查 `LARK_CONFIG_DIR` 环境变量
 2. 默认位置: `~/.lark-cli/config.json`
 3. 读取 JSON 文件
 4. 验证结构（apps 非空）

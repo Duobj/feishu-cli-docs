@@ -26,7 +26,7 @@
     ├─ 步骤 4: 检查权限
     │  └─ lark-cli auth check --scope "..."
     ├─ 步骤 5: 查看日志
-    │  └─ export LARKSUITE_CLI_DEBUG=1
+    │  └─ export LARK_DEBUG=1
     └─ 步骤 6: 重新初始化
        └─ lark-cli config init
 ```
@@ -122,13 +122,13 @@ lark-cli config init
 **解决方案：**
 ```bash
 # 备份旧配置
-cp ~/.config/lark-cli/config.json ~/.config/lark-cli/config.json.bak
+cp ~/.lark-cli/config.json ~/.lark-cli/config.json.bak
 
 # 重新初始化
 lark-cli config init
 
 # 如果需要恢复
-cp ~/.config/lark-cli/config.json.bak ~/.config/lark-cli/config.json
+cp ~/.lark-cli/config.json.bak ~/.lark-cli/config.json
 ```
 
 ### 问题 5: 多个应用冲突
@@ -187,7 +187,7 @@ lark-cli auth status
 ### 启用调试日志
 
 ```bash
-export LARKSUITE_CLI_DEBUG=1
+export LARK_DEBUG=1
 lark-cli calendar +agenda
 ```
 
