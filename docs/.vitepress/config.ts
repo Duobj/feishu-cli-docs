@@ -29,15 +29,16 @@ export default defineConfig({
           text: '深入理解',
           items: [
             { text: '鉴权系统详细解读', link: '/guide/architecture' },
-            { text: '高级认证系统', link: '/guide/advanced-auth' },
-            { text: '凭证提供者系统', link: '/guide/credential-providers' },
+            { text: '实现指南', link: '/guide/implementation' },
             { text: '命令系统设计', link: '/guide/command-system' },
             { text: '配置管理系统', link: '/guide/config-system' },
             { text: '错误处理体系', link: '/guide/error-handling' },
             { text: '快捷命令开发实战', link: '/guide/shortcut-development' },
-            { text: '源码导航指南', link: '/guide/source-code-navigation' },
             { text: 'Calendar 服务开发指南', link: '/guide/calendar-service-guide' },
-            { text: '实现指南', link: '/guide/implementation' },
+            { text: '高级认证系统', link: '/guide/advanced-auth' },
+            { text: '凭证提供者系统', link: '/guide/credential-providers' },
+            { text: '源码导航指南', link: '/guide/source-code-navigation' },
+            { text: '设计你自己的 CLI', link: '/guide/design-your-own-cli' },
             { text: '场景和流程图', link: '/guide/scenarios' }
           ]
         }
